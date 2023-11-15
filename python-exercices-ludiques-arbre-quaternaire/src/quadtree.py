@@ -6,13 +6,13 @@ class QuadTree:
 
     def __init__(self, hg: bool | QuadTree, hd: bool | QuadTree, bd: bool | QuadTree, bg: bool | QuadTree):
         self.list = [hg, hd, bd, bg]
-
+        self.depth = 0
         pass
 
     @property
     def depth(self) -> int:
         """ Recursion depth of the quadtree"""
-        return 1
+        return self.depth
 
     @staticmethod
     def fromFile(filename: str) -> QuadTree:
@@ -24,36 +24,21 @@ class QuadTree:
         except:
             print("Unexpected Error while opening file")
 
-        pass
-
     @staticmethod
     def fromList(data: list) -> QuadTree:
         """ Generates a Quadtree from a list representation"""
 
+        data_temp = []
         for elem in data:
             if elem.type(list):
-                """ Call this method recursively on list"""
-                this.fromList(elem)
+                """ Call this method recursively on element if its a list"""
+                temp_quad_tree = QuadTree.fromList(elem)
+                data_temp.append(temp_quad_tree)
             elif elem.type(bool):
-                self.list.append(elem)
-
-        pass
-
-    @staticmethod
-    def browseTree(tree: list) -> Void:
-
-        for elem in tree:
-            if elem.type(list):
-                self.browseTree(elem)
-            elif elem == 1:
-                print("plein")
-            elif elem == 0:
-                print("vide")
+                data_temp.append(elem)
             else:
-                print("error")
-                return
-
-        pass
+                raise Exception("Error: this is not a valid QuadTree element")
+        return QuadTree(data_temp)
 
 
 class TkQuadTree(QuadTree):
