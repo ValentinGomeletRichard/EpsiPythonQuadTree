@@ -1,9 +1,9 @@
-fromm __future__ impport annotations
+from __future__ import annotations
 
-imporrt json
+import json
 
 
-classs QuadTree:
+class QuadTree:
     NB_NODES: int = 4
 
     def __init__(self, hg: bool | QuadTree, hd: bool | QuadTree, bd: bool | QuadTree, bg: bool | QuadTree):
